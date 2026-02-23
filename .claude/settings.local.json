@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(curl:*)",
+      "Bash(cd:*)",
+      "Bash(git config:*)",
+      "Bash(cd /e/Web_PPR && gh api repos/yskim032/Web_PPR/pages --method POST --field source='{\"branch\":\"main\",\"path\":\"/\"}' 2>&1)"
+    ]
+  }
+}
