@@ -1,0 +1,226 @@
+/* ============================================================
+   PPR (Performance Report) Page Styles
+   ============================================================ */
+
+.ppr-nav-tabs .nav-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #495057;
+  padding: 0.45rem 1rem;
+  border-radius: 0;
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.ppr-nav-tabs .nav-link:hover {
+  color: var(--msc-blue);
+  border-bottom-color: #dee2e6;
+}
+
+.ppr-nav-tabs .nav-link.active {
+  color: var(--msc-blue);
+  font-weight: 700;
+  border-color: #dee2e6 #dee2e6 white;
+  border-bottom: 2px solid var(--msc-orange);
+  background: white;
+}
+
+.ppr-body {
+  background: #f8f9fa;
+  min-height: calc(100vh - 100px);
+}
+
+.ppr-tab-panel {
+  display: none;
+}
+
+.ppr-tab-panel.active {
+  display: block;
+}
+
+.ppr-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--msc-blue);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--msc-orange);
+  padding-bottom: 0.4rem;
+  display: inline-block;
+}
+
+.ppr-card {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.ppr-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6c757d;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.ppr-field {
+  font-size: 0.82rem;
+}
+
+/* PPR Table */
+.ppr-table {
+  font-size: 0.75rem;
+  border-collapse: collapse;
+  width: 100%;
+  background: white;
+}
+
+.ppr-table th {
+  background: #00305e;
+  color: white;
+  text-align: center;
+  padding: 4px 5px;
+  font-size: 0.68rem;
+  white-space: nowrap;
+  border: 1px solid #1a4070;
+  font-weight: 600;
+}
+
+.ppr-table td {
+  border: 1px solid #dee2e6;
+  padding: 2px 3px;
+  vertical-align: middle;
+}
+
+.ppr-table td.status-cell {
+  background: #eaf0f9;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-align: center;
+  color: var(--msc-blue);
+  white-space: nowrap;
+}
+
+.ppr-table td.subtotal-cell {
+  background: #d1e4f5;
+  font-weight: 700;
+  text-align: center;
+  color: #003060;
+}
+
+.ppr-table td.gtotal-cell {
+  background: var(--msc-blue);
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ppr-table td.shift-cell {
+  background: #fff3cd;
+  font-weight: 600;
+}
+
+.ppr-table tr.subtotal-row td {
+  background: #d1e4f5;
+  font-weight: 700;
+}
+
+.ppr-table tr.gtotal-row td {
+  background: var(--msc-blue);
+  color: white;
+  font-weight: 700;
+}
+
+/* PPR Number Inputs */
+.ppr-num {
+  width: 42px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 2px;
+  text-align: center;
+  font-size: 0.72rem;
+  background: #fffcf0;
+}
+
+.ppr-num:focus {
+  outline: none;
+  border-color: var(--msc-orange);
+  background: #fff5e0;
+  box-shadow: 0 0 0 2px rgba(232, 93, 19, 0.15);
+}
+
+.ppr-num.readonly {
+  background: #f0f0f0;
+  color: #333;
+  font-weight: 700;
+  cursor: default;
+  border-color: #bbb;
+}
+
+.ppr-num[readonly] {
+  background: #e9ecef;
+  color: #333;
+  cursor: default;
+}
+
+/* Work Record */
+.ppr-dt {
+  width: 150px;
+  font-size: 0.72rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 3px;
+}
+
+.ppr-text-sm {
+  width: 60px;
+  font-size: 0.72rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 3px;
+  text-align: center;
+}
+
+.ppr-crane {
+  width: 55px;
+  font-size: 0.72rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.ppr-remark {
+  width: 100%;
+  font-size: 0.72rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+/* Lost Time table */
+.lt-time {
+  width: 145px;
+  font-size: 0.72rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 3px;
+}
+
+.lt-dur {
+  width: 80px;
+  text-align: center;
+  font-size: 0.72rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+/* Scrollable on mobile */
+@media (max-width: 1200px) {
+  .ppr-table { min-width: 1000px; }
+}

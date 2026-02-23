@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPR - Performance Report</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/ppr.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-msc px-4">
+  <div class="d-flex align-items-center gap-3">
+    <a href="index.html" class="btn btn-outline-light btn-sm">
+      <i class="bi bi-arrow-left me-1"></i>Back
+    </a>
+    <div>
+      <span class="fw-bold text-white fs-6">PERFORMANCE REPORT (PPR)</span>
+      <span class="ms-2 badge bg-light text-dark" id="pprVesselBadge"></span>
+    </div>
+  </div>
+  <div class="d-flex gap-2">
+    <button class="btn btn-outline-light btn-sm" id="btnSavePPR">
+      <i class="bi bi-save me-1"></i>Save
+    </button>
+    <button class="btn btn-outline-light btn-sm" id="btnExportPPRJSON">
+      <i class="bi bi-download me-1"></i>JSON
+    </button>
+    <button class="btn btn-outline-light btn-sm" id="btnExportPPRXML">
+      <i class="bi bi-download me-1"></i>XML
+    </button>
+    <button class="btn btn-outline-light btn-sm" id="btnImportPPR">
+      <i class="bi bi-upload me-1"></i>Import
+    </button>
+  </div>
+</nav>
+
+<!-- PPR Tabs -->
+<div class="container-fluid px-0">
+  <ul class="nav nav-tabs ppr-nav-tabs px-3 pt-2 bg-white border-bottom">
+    <li class="nav-item">
+      <button class="nav-link active" data-ppr-tab="all">ALL</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="msc">MSC</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="msc-special">MSC SPECIAL</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="partner-special">PARTNER SPECIAL</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="maersk-special">MAERSK SPECIAL</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="bundle">BUNDLE / B.BULK</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="special">SPECIAL CNTR</button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link" data-ppr-tab="remark">REMARK</button>
+    </li>
+  </ul>
+
+  <!-- Tab Content Container -->
+  <div class="ppr-body px-3 py-3">
+
+    <!-- === TAB: ALL === -->
+    <div class="ppr-tab-panel active" id="ppr-tab-all">
+
+      <!-- Section Title -->
+      <div class="ppr-title text-center mb-3">PERFORMANCE REPORT (ALL)</div>
+
+      <!-- Header Info -->
+      <div class="ppr-card mb-3">
+        <div class="row g-2 mb-2">
+          <div class="col-md-4">
+            <label class="ppr-label">1. VESSEL NAME</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_vesselName" placeholder="MSC VESSEL NAME">
+          </div>
+          <div class="col-md-4">
+            <label class="ppr-label">2. VOYAGE</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_voyage" placeholder="UK605A/UK605A">
+          </div>
+          <div class="col-md-4">
+            <label class="ppr-label">3. PIER</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_pier" placeholder="PNIT-T1">
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-12">
+            <div class="d-flex flex-wrap gap-3 align-items-end">
+              <div>
+                <label class="ppr-label">4. DISCHARGING - Commence</label>
+                <input type="datetime-local" class="form-control form-control-sm ppr-field" id="f_dischCommence">
+              </div>
+              <div>
+                <label class="ppr-label">Complete</label>
+                <input type="datetime-local" class="form-control form-control-sm ppr-field" id="f_dischComplete">
+              </div>
+              <div>
+                <label class="ppr-label">Berthing</label>
+                <input type="datetime-local" class="form-control form-control-sm ppr-field" id="f_berthing">
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="d-flex flex-wrap gap-3 align-items-end">
+              <div>
+                <label class="ppr-label">5. LOADING - Commence</label>
+                <input type="datetime-local" class="form-control form-control-sm ppr-field" id="f_loadCommence">
+              </div>
+              <div>
+                <label class="ppr-label">Complete</label>
+                <input type="datetime-local" class="form-control form-control-sm ppr-field" id="f_loadComplete">
+              </div>
+              <div>
+                <label class="ppr-label">Sailing</label>
+                <input type="datetime-local" class="form-control form-control-sm ppr-field" id="f_sailing">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-md-3">
+            <label class="ppr-label">6. PORT</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_port" placeholder="KRPUS">
+          </div>
+          <div class="col-md-3">
+            <label class="ppr-label">7. NEXT PORT</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_nextPort" placeholder="SEATTLE">
+          </div>
+          <div class="col-md-2">
+            <label class="ppr-label">LASHING</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_lashing" placeholder="WESTERN">
+          </div>
+          <div class="col-md-2">
+            <label class="ppr-label">8. OPEN HATCH COVER (EA)</label>
+            <input type="number" class="form-control form-control-sm ppr-field" id="f_hatchCover" min="0">
+          </div>
+          <div class="col-md-2">
+            <label class="ppr-label">9. CONE BOX (E/A)</label>
+            <input type="number" class="form-control form-control-sm ppr-field" id="f_coneBox" min="0">
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-md-2">
+            <label class="ppr-label">10. BUNDLE</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_bundle" placeholder="">
+          </div>
+          <div class="col-md-2">
+            <label class="ppr-label">BREAK BULK</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_breakBulk" placeholder="">
+          </div>
+          <div class="col-md-8">
+            <label class="ppr-label">REMARK</label>
+            <input type="text" class="form-control form-control-sm ppr-field" id="f_remark" placeholder="Special instructions...">
+          </div>
+        </div>
+      </div>
+
+      <!-- DISCHARGE (INBOUND) Table -->
+      <div class="ppr-section-header">DISCHARGE (INBOUND)</div>
+      <div class="table-responsive mb-3">
+        <table class="ppr-table" id="tbl_discharge">
+          <thead>
+            <tr>
+              <th rowspan="3" style="width:80px">STATUS</th>
+              <th rowspan="3" style="width:70px">TYPE</th>
+              <th colspan="8">BOX OPERATOR ACCOUNT</th>
+              <th colspan="8">PARTNER ACCOUNT</th>
+              <th colspan="8">TOTAL</th>
+            </tr>
+            <tr>
+              <th colspan="4">FULL</th>
+              <th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th>
+              <th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th>
+              <th colspan="4">EMPTY</th>
+            </tr>
+            <tr>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+            </tr>
+          </thead>
+          <tbody id="dischBody"></tbody>
+        </table>
+      </div>
+
+      <!-- LOAD (OUTBOUND) Table -->
+      <div class="ppr-section-header">LOAD (OUTBOUND)</div>
+      <div class="table-responsive mb-3">
+        <table class="ppr-table" id="tbl_load">
+          <thead>
+            <tr>
+              <th rowspan="3" style="width:80px">STATUS</th>
+              <th rowspan="3" style="width:70px">TYPE</th>
+              <th colspan="8">BOX OPERATOR ACCOUNT</th>
+              <th colspan="8">PARTNER ACCOUNT</th>
+              <th colspan="8">TOTAL</th>
+            </tr>
+            <tr>
+              <th colspan="4">FULL</th>
+              <th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th>
+              <th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th>
+              <th colspan="4">EMPTY</th>
+            </tr>
+            <tr>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+            </tr>
+          </thead>
+          <tbody id="loadBody"></tbody>
+        </table>
+      </div>
+
+      <!-- A. Working Record -->
+      <div class="ppr-section-header">A. WORKING RECORD</div>
+      <div class="table-responsive mb-3">
+        <table class="ppr-table">
+          <thead>
+            <tr>
+              <th style="width:70px">CRANE NO.</th>
+              <th colspan="2">DAY/TIME (FM ~ TO)</th>
+              <th colspan="2">GROSS TIME</th>
+              <th colspan="2">LOST TIME</th>
+              <th colspan="2">NET TIME</th>
+              <th>TTL MOVES</th>
+            </tr>
+            <tr>
+              <th></th>
+              <th>FROM</th><th>TO</th>
+              <th>hrs</th><th>min</th>
+              <th>hrs</th><th>min</th>
+              <th>hrs</th><th>min</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="workRecordBody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="status-cell" colspan="3">TOTAL</td>
+              <td id="wr_grossHrs" class="subtotal-row text-center fw-bold"></td>
+              <td id="wr_grossMin" class="subtotal-row text-center fw-bold"></td>
+              <td id="wr_lostHrs" class="subtotal-row text-center fw-bold"></td>
+              <td id="wr_lostMin" class="subtotal-row text-center fw-bold"></td>
+              <td id="wr_netHrs" class="subtotal-row text-center fw-bold"></td>
+              <td id="wr_netMin" class="subtotal-row text-center fw-bold"></td>
+              <td id="wr_moves" class="subtotal-row text-center fw-bold"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- B. Productivity -->
+      <div class="ppr-card mb-3">
+        <div class="ppr-section-header mb-2">B. PRODUCTIVITY</div>
+        <div class="d-flex gap-4">
+          <div>
+            <label class="ppr-label">GROSS (Moves/hr)</label>
+            <input type="number" class="form-control form-control-sm ppr-field" id="f_grossProductivity" style="width:120px" readonly>
+          </div>
+          <div>
+            <label class="ppr-label">NET (Moves/hr)</label>
+            <input type="number" class="form-control form-control-sm ppr-field" id="f_netProductivity" style="width:120px" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- C. Lost Time -->
+      <div class="ppr-section-header">C. LOST TIME</div>
+      <div class="table-responsive mb-3">
+        <table class="ppr-table">
+          <thead>
+            <tr>
+              <th style="width:70px">CRANE NO.</th>
+              <th>FROM (DAY/TIME)</th>
+              <th>TO (DAY/TIME)</th>
+              <th style="width:100px">LOST TIME</th>
+              <th>REMARKS</th>
+              <th style="width:40px"></th>
+            </tr>
+          </thead>
+          <tbody id="lostTimeBody"></tbody>
+          <tfoot>
+            <tr>
+              <td class="status-cell" colspan="3">TOTAL</td>
+              <td id="lt_total" class="subtotal-row text-center fw-bold"></td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <button class="btn btn-sm btn-outline-secondary mb-3" id="btnAddLostTime">
+        <i class="bi bi-plus-circle me-1"></i>Add Lost Time Row
+      </button>
+
+    </div><!-- /ppr-tab-all -->
+
+    <!-- === TAB: MSC === -->
+    <div class="ppr-tab-panel" id="ppr-tab-msc">
+      <div class="ppr-title text-center mb-3">PERFORMANCE REPORT (MSC)</div>
+      <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        MSC account data is auto-calculated from the ALL tab (MSC rows only).
+        Values shown here reflect MSC LOCAL, MSC IN T/S, and MSC OUT T/S entries.
+      </div>
+      <div id="mscSummaryContent"></div>
+    </div>
+
+    <!-- === TAB: MSC SPECIAL === -->
+    <div class="ppr-tab-panel" id="ppr-tab-msc-special">
+      <div class="ppr-title text-center mb-3">MSC SPECIAL CONTAINER</div>
+      <div class="table-responsive">
+        <table class="ppr-table">
+          <thead>
+            <tr>
+              <th rowspan="3" style="width:80px">ACCOUNT</th>
+              <th rowspan="3" style="width:70px">TYPE</th>
+              <th colspan="8">INBOUND</th>
+              <th colspan="8">OUTBOUND</th>
+            </tr>
+            <tr>
+              <th colspan="4">FULL</th><th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th><th colspan="4">EMPTY</th>
+            </tr>
+            <tr>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+            </tr>
+          </thead>
+          <tbody id="mscSpecialBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === TAB: PARTNER SPECIAL === -->
+    <div class="ppr-tab-panel" id="ppr-tab-partner-special">
+      <div class="ppr-title text-center mb-3">PARTNER ACCOUNT SPECIAL CONTAINER</div>
+      <div class="table-responsive">
+        <table class="ppr-table">
+          <thead>
+            <tr>
+              <th rowspan="3" style="width:80px">ACCOUNT</th>
+              <th rowspan="3" style="width:70px">TYPE</th>
+              <th colspan="8">INBOUND</th>
+              <th colspan="8">OUTBOUND</th>
+            </tr>
+            <tr>
+              <th colspan="4">FULL</th><th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th><th colspan="4">EMPTY</th>
+            </tr>
+            <tr>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+            </tr>
+          </thead>
+          <tbody id="partnerSpecialBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === TAB: MAERSK SPECIAL === -->
+    <div class="ppr-tab-panel" id="ppr-tab-maersk-special">
+      <div class="ppr-title text-center mb-3">MAERSK SPECIAL CONTAINER</div>
+      <div class="table-responsive">
+        <table class="ppr-table">
+          <thead>
+            <tr>
+              <th rowspan="3" style="width:80px">ACCOUNT</th>
+              <th rowspan="3" style="width:70px">TYPE</th>
+              <th colspan="8">INBOUND</th>
+              <th colspan="8">OUTBOUND</th>
+            </tr>
+            <tr>
+              <th colspan="4">FULL</th><th colspan="4">EMPTY</th>
+              <th colspan="4">FULL</th><th colspan="4">EMPTY</th>
+            </tr>
+            <tr>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+              <th>20'</th><th>40'</th><th>HC</th><th>45'</th>
+            </tr>
+          </thead>
+          <tbody id="maerskSpecialBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === TAB: BUNDLE / BREAK BULK === -->
+    <div class="ppr-tab-panel" id="ppr-tab-bundle">
+      <div class="ppr-title text-center mb-3">BUNDLE & BREAK BULK</div>
+      <div class="row g-4">
+        <!-- Bundle -->
+        <div class="col-md-6">
+          <div class="ppr-section-header mb-2">BUNDLE</div>
+          <div class="table-responsive">
+            <table class="ppr-table" id="tbl_bundle">
+              <thead>
+                <tr>
+                  <th>MOVEMENT</th>
+                  <th>TYPE</th>
+                  <th>표수 (Units)</th>
+                  <th>Bundle Unit</th>
+                  <th>REMARK</th>
+                </tr>
+              </thead>
+              <tbody id="bundleBody">
+                <tr>
+                  <td><select class="ppr-input" style="width:80px"><option>INBOUND</option><option>OUTBOUND</option></select></td>
+                  <td><input type="text" class="ppr-input" placeholder="Type"></td>
+                  <td><input type="number" class="ppr-input" min="0"></td>
+                  <td><input type="number" class="ppr-input" min="0"></td>
+                  <td><input type="text" class="ppr-input" style="width:100px"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary mt-2" onclick="addBundleRow()">
+            <i class="bi bi-plus-circle me-1"></i>Add Row
+          </button>
+        </div>
+
+        <!-- Break Bulk -->
+        <div class="col-md-6">
+          <div class="ppr-section-header mb-2">BREAK BULK</div>
+          <div class="table-responsive">
+            <table class="ppr-table" id="tbl_bbulk">
+              <thead>
+                <tr>
+                  <th>MOVEMENT</th>
+                  <th>POL</th>
+                  <th>Weight (Ton)</th>
+                  <th>Dimension (M)</th>
+                  <th>Bed Unit</th>
+                  <th>TYPE</th>
+                </tr>
+              </thead>
+              <tbody id="bbulkBody">
+                <tr>
+                  <td><select class="ppr-input" style="width:80px"><option>INBOUND</option><option>OUTBOUND</option></select></td>
+                  <td><input type="text" class="ppr-input" placeholder="POL"></td>
+                  <td><input type="number" class="ppr-input" step="0.1" min="0"></td>
+                  <td><input type="text" class="ppr-input"></td>
+                  <td><input type="number" class="ppr-input" min="0"></td>
+                  <td><input type="text" class="ppr-input"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn btn-sm btn-outline-secondary mt-2" onclick="addBBulkRow()">
+            <i class="bi bi-plus-circle me-1"></i>Add Row
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- === TAB: SPECIAL CONTAINER SUMMARY === -->
+    <div class="ppr-tab-panel" id="ppr-tab-special">
+      <div class="ppr-title text-center mb-3">D. SPECIAL CONTAINER SUMMARY</div>
+      <div class="table-responsive">
+        <table class="ppr-table">
+          <thead>
+            <tr>
+              <th rowspan="3" style="width:80px">STATUS</th>
+              <th rowspan="3" style="width:70px">TYPE</th>
+              <th colspan="6">INBOUND</th>
+              <th colspan="6">OUTBOUND</th>
+              <th colspan="6">TOTAL</th>
+            </tr>
+            <tr>
+              <th colspan="3">FULL</th><th colspan="3">EMPTY</th>
+              <th colspan="3">FULL</th><th colspan="3">EMPTY</th>
+              <th colspan="3">FULL</th><th colspan="3">EMPTY</th>
+            </tr>
+            <tr>
+              <th>20'</th><th>40'</th><th>HC</th>
+              <th>20'</th><th>40'</th><th>HC</th>
+              <th>20'</th><th>40'</th><th>HC</th>
+              <th>20'</th><th>40'</th><th>HC</th>
+              <th>20'</th><th>40'</th><th>HC</th>
+              <th>20'</th><th>40'</th><th>HC</th>
+            </tr>
+          </thead>
+          <tbody id="specialCntrBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- === TAB: REMARK === -->
+    <div class="ppr-tab-panel" id="ppr-tab-remark">
+      <div class="ppr-title text-center mb-3">REMARK</div>
+      <div class="ppr-card">
+        <label class="ppr-label mb-2">General Remarks / Special Notes</label>
+        <textarea class="form-control" id="f_remarks" rows="12"
+                  placeholder="Enter remarks, special instructions, incidents, or any other notes here..."
+                  style="font-family: monospace; font-size: 0.85rem;"></textarea>
+      </div>
+    </div>
+
+  </div><!-- /ppr-body -->
+</div>
+
+<!-- Import File Input -->
+<input type="file" id="pprImportInput" class="d-none" accept=".json,.xml">
+
+<!-- Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="pprToast" class="toast align-items-center text-white border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="pprToastMsg"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="js/ppr.js"></script>
+</body>
+</html>
